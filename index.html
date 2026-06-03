@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daler Rashidov</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+background:#0a0a0a;color:#fff;min-height:100vh;
+display:flex;justify-content:center;align-items:center;overflow:hidden;
+}
+.bg{
+position:fixed;inset:0;
+background:radial-gradient(circle at 20% 20%, rgba(0,136,204,.2), transparent 30%),
+radial-gradient(circle at 80% 80%, rgba(0,136,204,.15), transparent 30%);
+z-index:-1;
+}
+.card{
+width:90%;max-width:800px;background:rgba(255,255,255,0.04);
+backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,0.08);
+border-radius:24px;padding:50px;text-align:center;
+}
+.avatar{
+width:120px;height:120px;margin:0 auto 25px;border-radius:50%;
+background:linear-gradient(135deg,#0088cc,#00bfff);
+display:flex;align-items:center;justify-content:center;
+font-size:42px;font-weight:bold;
+}
+h1{font-size:48px;margin-bottom:10px;}
+.subtitle{color:#00bfff;font-size:20px;margin-bottom:25px;}
+.description{color:#cfcfcf;line-height:1.8;font-size:18px;margin-bottom:40px;}
+.telegram-btn{
+display:inline-block;padding:16px 35px;background:#0088cc;color:white;
+text-decoration:none;border-radius:12px;font-size:18px;font-weight:600;
+}
+.footer{margin-top:35px;color:#777;font-size:14px;}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="card">
+<div class="avatar">DR</div>
+<h1>Daler Rashidov</h1>
+<div class="subtitle">Помощь пожилым людям</div>
+<div class="description">
+Помогаю пожилым людям по всему миру осваивать современные технологии,
+пользоваться смартфонами, интернетом и цифровыми сервисами.
+</div>
+<a class="telegram-btn" href="https://t.me/wpanq" target="_blank">
+Написать в Telegram
+</a>
+<div class="footer">© Daler Rashidov</div>
+</div>
+</body>
+</html>
