@@ -32,6 +32,7 @@ h1{font-size:48px;margin-bottom:10px;}
 .subtitle{color:#00bfff;font-size:20px;margin-bottom:25px;}
 .description{color:#cfcfcf;line-height:1.8;font-size:18px;margin-bottom:40px;}
 
+/* Стили формы отправки */
 .chat-form {
 max-width: 500px;
 margin: 0 auto;
@@ -86,8 +87,9 @@ font-weight: 500;
 пользоваться смартфонами, интернетом и цифровыми сервисами.
 </div>
 
+<!-- Форма обратной связи -->
 <form class="chat-form" id="tgForm">
-    <textarea class="chat-input" id="userMessage" rows="3" placeholder="Введите ваше сообщение сюда..." required></textarea>
+    <textarea class="chat-form chat-input" id="userMessage" rows="3" placeholder="Введите ваше сообщение сюда..." required></textarea>
     <button type="submit" class="telegram-btn" id="submitBtn">Отправить сообщение</button>
     <div class="status-msg" id="status"></div>
 </form>
@@ -110,8 +112,10 @@ document.getElementById('tgForm').addEventListener('submit', function(e) {
     status.innerText = "Отправка...";
     status.style.color = "#00bfff";
 
+    // Генерируем случайный ID для сессии клиента
     const clientId = "User_" + Math.floor(Math.random() * 90000 + 10000);
 
+    // Делаем запрос к твоему бэкенду на Render
     fetch('https://wpanqbot.onrender.com/send_to_tg', {
         method: 'POST',
         headers: {
