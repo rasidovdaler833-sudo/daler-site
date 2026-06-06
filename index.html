@@ -4,82 +4,61 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Daler Rashidov</title>
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{ <div id="chatBtn">💬</div>
-
-<div id="chatBox">
-    <div id="messages"></div>
-
-    <textarea id="input"></textarea>
-    <button onclick="send()">Send</button>
-</div>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
 font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-background:#0a0a0a;color:#fff;min-height:100vh;
-display:flex;justify-content:center;align-items:center;overflow:hidden; } 
+}
+
+body{
+background:#0a0a0a;
+color:#fff;
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
 .bg{
-position:fixed;inset:0;
+position:fixed;
+inset:0;
 background:radial-gradient(circle at 20% 20%, rgba(0,136,204,.2), transparent 30%),
 radial-gradient(circle at 80% 80%, rgba(0,136,204,.15), transparent 30%);
 z-index:-1;
 }
+
 .card{
-width:90%;max-width:800px;background:rgba(255,255,255,0.04);
-backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,0.08);
-border-radius:24px;padding:50px;text-align:center;
+width:90%;
+max-width:800px;
+background:rgba(255,255,255,0.04);
+backdrop-filter:blur(15px);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:24px;
+padding:50px;
+text-align:center;
 }
+
 .avatar{
-width:120px;height:120px;margin:0 auto 25px;border-radius:50%;
+width:120px;
+height:120px;
+margin:0 auto 25px;
+border-radius:50%;
 background:linear-gradient(135deg,#0088cc,#00bfff);
-display:flex;align-items:center;justify-content:center;
-font-size:42px;font-weight:bold;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:42px;
+font-weight:bold;
 }
+
 h1{font-size:48px;margin-bottom:10px;}
 .subtitle{color:#00bfff;font-size:20px;margin-bottom:25px;}
 .description{color:#cfcfcf;line-height:1.8;font-size:18px;margin-bottom:40px;}
 
-/* Стили формы отправки */
-.chat-form {
-max-width: 500px;
-margin: 0 auto;
-}
-.chat-input {
-width: 100%;
-padding: 16px;
-background: rgba(255,255,255,0.05);
-border: 1px solid rgba(255,255,255,0.1);
-border-radius: 12px;
-color: white;
-font-size: 16px;
-margin-bottom: 15px;
-outline: none;
-resize: none;
-font-family: inherit;
-}
-.chat-input:focus {
-border-color: #0088cc;
-}
-.telegram-btn {
-width: 100%;
-padding: 16px 35px;
-background: #0088cc;
-color: white;
-border: none;
-border-radius: 12px;
-font-size: 18px;
-font-weight: 600;
-cursor: pointer;
-transition: background 0.2s;
-}
-.telegram-btn:hover {
-background: #0077b3;
-}
-.status-msg {
-margin-top: 15px;
-font-size: 16px;
-font-weight: 500;
-}
-.footer{margin-top:35px;color:#777;font-size:14px;}
+/* КНОПКА ЧАТА */
 #chatBtn{
 position:fixed;
 right:20px;
@@ -96,6 +75,7 @@ cursor:pointer;
 z-index:9999;
 }
 
+/* ОКНО ЧАТА */
 #chatBox{
 position:fixed;
 right:20px;
@@ -113,84 +93,108 @@ z-index:9999;
 flex:1;
 overflow:auto;
 padding:10px;
-color:white;
 font-size:14px;
+color:white;
 }
 
 #input{
-height:60px;
 width:100%;
+height:60px;
 box-sizing:border-box;
-}</style>
+}
+
+button{
+background:#0088cc;
+color:white;
+border:none;
+padding:10px;
+cursor:pointer;
+}
+</style>
+
 </head>
+
 <body>
+
 <div class="bg"></div>
+
 <div class="card">
 <div class="avatar">DR</div>
 <h1>Daler Rashidov</h1>
 <div class="subtitle">Помощь пожилым людям</div>
 <div class="description">
-Помогаю пожилым людям по всему миру осваивать современные технологии,
-пользоваться смартфонами, интернетом и цифровыми сервисами.
+Помогаю людям осваивать технологии и интернет.
+</div>
 </div>
 
-<!-- Форма обратной связи -->
-<form class="chat-form" id="tgForm">
-    <textarea class="chat-form chat-input" id="userMessage" rows="3" placeholder="Введите ваше сообщение сюда..." required></textarea>
-    <button type="submit" class="telegram-btn" id="submitBtn">Отправить сообщение</button>
-    <div class="status-msg" id="status"></div>
-</form>
+<!-- ЧАТ -->
+<div id="chatBtn">💬</div>
 
-<div class="footer">© Daler Rashidov</div>
+<div id="chatBox">
+<div id="messages"></div>
+<textarea id="input" placeholder="Напиши сообщение..."></textarea>
+<button onclick="send()">Отправить</button>
 </div>
 
 <script>
-document.getElementById('tgForm').addEventListener('submit', function(e) {
-    e.preventDefault();
+let clientId = localStorage.getItem("cid");
 
-    const input = document.getElementById('userMessage');
-    const button = document.getElementById('submitBtn');
-    const status = document.getElementById('status');
-    const text = input.value.trim();
+if(!clientId){
+clientId = "User_" + crypto.randomUUID();
+localStorage.setItem("cid", clientId);
+}
 
-    if(!text) return;
+const btn = document.getElementById("chatBtn");
+const box = document.getElementById("chatBox");
 
-    button.disabled = true;
-    status.innerText = "Отправка...";
-    status.style.color = "#00bfff";
+btn.onclick = () => {
+if(box.style.display === "flex"){
+box.style.display = "none";
+} else {
+box.style.display = "flex";
+box.style.flexDirection = "column";
+load();
+}
+};
 
-    // Генерируем случайный ID для сессии клиента
-    const clientId = "User_" + Math.floor(Math.random() * 90000 + 10000);
+function send(){
+let text = document.getElementById("input").value;
 
-    // Делаем запрос к твоему бэкенду на Render
-    fetch('https://wpanqbot.onrender.com/send_to_tg', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            client_id: clientId,
-            message: text
-        })
-    })
-    .then(res => {
-        if(res.ok) {
-            status.innerText = "Сообщение успешно отправлено в Telegram! 👍";
-            status.style.color = "#2ecc71";
-            input.value = "";
-        } else {
-            status.innerText = "Ошибка сервера при отправке. ❌";
-            status.style.color = "#e74c3c";
-        }
-    })
-    .catch(err => {
-        console.error(err);
-        status.innerText = "Не удалось связаться с сервером. ❌";
-        status.style.color = "#e74c3c";
-    })
-    .finally(() => {
-        button.disabled = false;
-    });
+if(!text.trim()) return;
+
+fetch("https://wpanqbot.onrender.com/send", {
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+client_id: clientId,
+message: text
+})
 });
+
+document.getElementById("input").value="";
+}
+
+function load(){
+fetch("https://wpanqbot.onrender.com/chat/" + clientId)
+.then(r=>r.json())
+.then(data=>{
+let box = document.getElementById("messages");
+box.innerHTML = "";
+
+data.forEach(m=>{
+let div = document.createElement("div");
+div.style.marginBottom = "6px";
+
+div.innerText =
+(m.sender === "user" ? "👤 " : "🟢 ") + m.message;
+
+box.appendChild(div);
+});
+});
+}
+
+setInterval(load, 2000);
 </script>
-</body> 
+
+</body>
+</html>
