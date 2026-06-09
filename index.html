@@ -183,10 +183,13 @@ box.innerHTML = "";
 
 data.forEach(m=>{
 let div = document.createElement("div");
-div.style.marginBottom = "6px";
 
-div.innerText =
-(m.sender === "user" ? "👤 " : "🟢 ") + m.message;
+div.className =
+m.sender === "user"
+? "msg user"
+: "msg admin";
+
+div.innerText = m.message;
 
 box.appendChild(div);
 });
