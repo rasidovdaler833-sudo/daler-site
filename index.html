@@ -233,11 +233,15 @@ box.scrollTop = box.scrollHeight;
 }
 
 setInterval(load, 2000);
-document.getElementById("input").addEventListener("keydown", function(e){
-  if(e.key === "Enter" && !e.shiftKey){
-    e.preventDefault();
-    send();
-  }
+window.addEventListener("load", () => {
+  const input = document.getElementById("input");
+
+  input.addEventListener("keydown", function(e){
+    if(e.key === "Enter" && !e.shiftKey){
+      e.preventDefault();
+      send();
+    }
+  });
 });
 </script>
 
