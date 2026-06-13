@@ -213,6 +213,7 @@ function load(){
 fetch("https://wpanqbot.onrender.com/chat/" + clientId)
 .then(r=>r.json())
 .then(data=>{
+console.log(data);
 let box = document.getElementById("messages");
 box.innerHTML = "";
 
